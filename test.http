@@ -1,0 +1,10 @@
+GET {{host}}/users
+Accept: application/json
+
+###
+
+
+GET {{host}}/courses
+Accept: application/json
+
+###
