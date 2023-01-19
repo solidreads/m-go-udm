@@ -1,10 +1,30 @@
+###
+POST {{host}}/users
+Content-Type: application/json
+
+{
+  "first_name": "rweeadasd",
+  "last_name": "Doe",
+  "email": "a@gmail.com",
+  "phone":"092387"
+}
+
+### Check healt endpoint users
 GET {{host}}/users
 Accept: application/json
 
-###
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
+
+###
 
 GET {{host}}/courses
 Accept: application/json
 
 ###
+
+
