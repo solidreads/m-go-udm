@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/solidreads/m-go-udm/internal/user"
 	"log"
 	"net/http"
 )
@@ -10,9 +11,11 @@ import (
 func main() {
 	router := mux.NewRouter()
 
-	userEnd := user
-	router.HandleFunc("/users", getUsers).Methods("GET")
-	router.HandleFunc("/courses", getCourses).Methods("GET")
+	userEnd := user.MakeEndpoints()
+	router.HandleFunc("/users", userEnd.Create).Methods("POST")
+	router.HandleFunc("/users", userEnd.GetAll).Methods("GET")
+	router.HandleFunc("/users", userEnd.Update).Methods("GET")
+	router.HandleFunc("/users", userEnd.Delete).Methods("PATCH")
 
 	srv := &http.Server{
 		Handler: router,

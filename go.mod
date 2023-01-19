@@ -1,4 +1,4 @@
-module UdemyGoMicroservices
+module github.com/solidreads/m-go-udm
 
 go 1.18
 
