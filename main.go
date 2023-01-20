@@ -2,8 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/solidreads/m-go-udm/internal/user"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
 )
@@ -11,6 +14,16 @@ import (
 func main() {
 	router := mux.NewRouter()
 
+	dsn := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
+		"root",
+		"root",
+		"127.0.0.1",
+		"3320",
+		"go_course_web")
+	db, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db = db.Debug()
+
+	_ = db.AutoMigrate(&user.User{})
 	userSrvc := user.NewService()
 	userEnd := user.MakeEndPoints(userSrvc)
 
