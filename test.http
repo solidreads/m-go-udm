@@ -3,7 +3,7 @@ POST {{host}}/users
 Content-Type: application/json
 
 {
-  "first_name": "rweeadasd",
+  "first_name": "reads",
   "last_name": "Doe",
   "email": "a@gmail.com",
   "phone":"092387"

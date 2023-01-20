@@ -24,10 +24,9 @@ func NewRepository(log *log.Logger, db *gorm.DB) Repository {
 func (repo *repo) Create(user *User) error {
 	user.ID = uuid.New().String()
 
-	result := repo.db.Create(user)
-	if result.Error != nil {
-		repo.log.Println(result.Error)
-		return result.Error
+	if err := repo.db.Create(user).Error; err != nil {
+		repo.log.Println(err)
+		return err
 	}
 
 	repo.log.Println("El usuario fue creado exitosamente con el ID: ", user.ID)

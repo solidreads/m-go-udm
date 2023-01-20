@@ -5,7 +5,7 @@ import (
 )
 
 type Service interface {
-	Create(firstNAme, lastName, email, phone string) (string, error)
+	Create(firstNAme, lastName, email, phone string) (*User, error)
 }
 
 type service struct {
@@ -20,13 +20,17 @@ func NewService(log *log.Logger, repo Repository) Service {
 	}
 }
 
-func (s *service) Create(firstNAme, lastName, email, phone string) (string, error) {
+func (s *service) Create(firstNAme, lastName, email, phone string) (*User, error) {
 	s.log.Println("service create user")
-	s.repo.Create(&User{
+	user := User{
 		FirstName: firstNAme,
 		LastName:  lastName,
 		Email:     email,
 		Phone:     phone,
-	})
-	return "", nil
+	}
+	if err := s.repo.Create(&user); err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }
