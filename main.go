@@ -27,7 +27,8 @@ func main() {
 	db = db.Debug()
 
 	_ = db.AutoMigrate(&user.User{})
-	userSrvc := user.NewService()
+	userRepo := user.NewRepository(db)
+	userSrvc := user.NewService(userRepo)
 	userEnd := user.MakeEndPoints(userSrvc)
 
 	router.HandleFunc("/users", userEnd.Create).Methods("POST")
